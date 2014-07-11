@@ -56,6 +56,18 @@ var _ = {};
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
+    // if collection is an array
+    if(collection.length > 0) {
+      for(var k = 0; k < collection.length; k++) {
+        iterator(collection[k], k, collection);
+      }
+    }
+    // if collection is an object
+    else {
+      for(var k in collection) {
+        iterator(collection[k], k, collection);
+      }
+    }
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
