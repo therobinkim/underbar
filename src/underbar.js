@@ -183,11 +183,21 @@ var _ = {};
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
-    if( accumulator == undefined) {
-      accumulator = collection[0];
+    if(Array.isArray(collection)) {
+      if(accumulator == undefined) {
+        accumulator = collection[0];
+      }
+      for(var i = 0; i < collection.length; i++) {
+        accumulator = iterator(accumulator, collection[i]);
+      }
     }
-    for(var i = 0; i < collection.length; i++) {
-      accumulator = iterator(accumulator, collection[i]);
+    else {
+      for(var k in collection) {
+        if(accumulator == undefined) {
+          accumulator = collection[k];
+        }
+        accumulator = iterator(accumulator, collection[k]);
+      }
     }
     return accumulator;
   };
