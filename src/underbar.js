@@ -237,6 +237,18 @@ var _ = {};
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    if(iterator == undefined) {
+      iterator = _.identity;
+    }
+
+    var someTruth = function(total, item) {
+      if(iterator(item)) {
+        return 1;
+      }
+      return total;
+    };
+
+    return _.reduce(collection, someTruth, 0) != 0;
   };
 
 
