@@ -331,6 +331,17 @@ var _ = {};
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    // var a = _.identity.apply(func, arguments);
+    // console.log( a );
+    var lookup = {};
+    var id = _.identity;
+    return function() {
+      var key = id.apply(this, arguments);
+      if(key in lookup)
+        return lookup[key];
+      else
+        return (lookup[key] = func.apply(this, arguments));
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
